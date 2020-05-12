@@ -13,6 +13,8 @@ MyDB::MyDB(int maxL)
 MyDB::~MyDB() {
     if (rows != nullptr)
         delete rows;
+    if (sortedRows != nullptr)
+        delete sortedRows;
 }
 
 size_t MyDB::getSize() {
@@ -50,11 +52,25 @@ void MyDB::index() {
     }
 }
 
+void MyDB::indexBySort() {
+    isIndex = true;
+    sortedRows = new SortIndex(&column);
+    if (size > 0) {
+        sortedRows->put(size);
+    }
+}
+
 void MyDB::printTree() {
     if (!isIndex)
         return ;
     // std::cout << "Called: printTree" << std::endl;
     rows->print();
+}
+
+void MyDB::printList() {
+    if (!isIndex)
+        return ;
+    sortedRows->print();
 }
 
 void MyDB::put(const char * src) {
@@ -90,6 +106,10 @@ const std::vector<size_t>* MyDB::findAll(const char * target) {
     return (isIndex) ? getListByIndex(target) : getListByLinear(target);
 }
 
+const std::vector<size_t>* MyDB::findBySort(const char * target) {
+    return sortedRows->lookUp(target);
+}
+
 void MyDB::print(const std::vector<size_t>* inList) {
     if (!inList->empty()) {
         std::cout << "Matched Items at index: " << std::endl;
@@ -103,4 +123,18 @@ void MyDB::print(const std::vector<size_t>* inList) {
         std::cout << "No matched items found" << std::endl;
     }
     if (!isIndex) delete inList;
+}
+
+void MyDB::printBySort(const std::vector<size_t>* inList) {
+    if (!inList->empty()) {
+        std::cout << "Matched Items at index: " << std::endl;
+        for (auto it=inList->cbegin(); it != inList->cend(); ++it) {
+            std::cout << *it << ' ';
+        }
+        std::cout << std::endl;
+    }
+    else {
+        std::cout << "No matched items found" << std::endl;
+    }
+    delete inList;
 }

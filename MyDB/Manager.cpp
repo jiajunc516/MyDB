@@ -24,6 +24,10 @@ void Manager::index() {
     db->index();
 }
 
+void Manager::indexBySort() {
+    db->indexBySort();
+}
+
 void Manager::insert(const char * src) {
     db->put(src);
 }
@@ -32,6 +36,18 @@ const std::vector<size_t>* Manager::select(const char * target) {
     return db->findAll(target);
 }
 
+const std::vector<size_t>* Manager::selectBySort(const char * target) {
+    return db->findBySort(target);
+}
+
 void Manager::print(const std::vector<size_t>* inList) {
     db->print(inList);
+}
+
+void Manager::printBySort(const std::vector<size_t>* inList) {
+    db->printBySort(inList);
+}
+
+MyDB* Manager::getDB() {
+    return db;
 }
