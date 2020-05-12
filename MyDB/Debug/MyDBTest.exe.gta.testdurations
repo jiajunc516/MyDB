@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Executable>E:\VS Projects\MyDB\MyDB\Debug\MyDBTest.exe</Executable>
-  <TestDurations>
-    <TestDuration Test="TestCompareChar.HandleSameLengthChar" Duration="1" />
-    <TestDuration Test="testCompareChar.HandleDiffLengthChar" Duration="1" />
-  </TestDurations>
-</GtaTestDurations>
