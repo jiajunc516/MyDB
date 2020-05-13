@@ -9,8 +9,8 @@
 class AVLIndexTree {
 private:
     bool collide = false;
-    TreeNode * root;
-    std::vector<std::unique_ptr<char[]>> * column;
+    TreeNode * root = nullptr;
+    std::vector<std::unique_ptr<char[]>> * column = nullptr;
     
     void deleteTree();
     int height(TreeNode* node);

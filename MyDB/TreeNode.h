@@ -18,8 +18,8 @@ private:
     // IndexNode * tail;
     std::vector<size_t> indexList;
     int height;
-    TreeNode * left;
-    TreeNode * right;
+    TreeNode * left = nullptr;
+    TreeNode * right = nullptr;
 
     // void initIndexList();
     // void deleteIndexList();

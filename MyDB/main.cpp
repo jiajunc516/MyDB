@@ -52,7 +52,6 @@ void printElapsedTimeForSelect(Manager* m, const std::vector<size_t>* (Manager::
 	cout << "Start Printing Data:" << endl;
 	auto starti = chrono::steady_clock::now();
 	m->print(v);
-	//m->printBySort(v);
 	auto endi = chrono::steady_clock::now();
 	cout << "Print Complete. Time Elapsed: " 
 		<< chrono::duration_cast<chrono::nanoseconds>(end - start).count() 
@@ -75,38 +74,24 @@ int main() {
 	// db.put("a");
 	// db.index();
 	// db.printTree();
-	
-	// //db.indexBySort();
-	// //db.printList();
 	// cout << "----------------" << endl;
 	// cout << "Search: a" << endl;
 	// db.findAll("a");
-	//const std::vector<size_t>* ans = db.findBySort("a");
-	//db.printBySort(ans);
 
 	Manager dbms(8);
 	// select * from Customers where Country = 'USA';
-	// dbms.readInputFile("Country.txt");
+	// printElapsedTimeForRead(&dbms, &Manager::readInputFile, "Country.txt");
 	// printElapsedTimeForIndex(&dbms, &(Manager::index));
 	// printElapsedTimeForSelect(&dbms, &(Manager::select), "USA");
-	// dbms.readInputFile("Country.txt");
-	// printElapsedTimeForIndex(&dbms, &(Manager::indexBySort));
-	// printElapsedTimeForSelect(&dbms, &(Manager::selectBySort), "USA");
 
 	// select * from Orders where OrderLineNumber = '2';
 	// dbms.readInputFile("OrderLineNumber.txt");
 	// printElapsedTimeForIndex(&dbms, &(Manager::index));
 	// printElapsedTimeForSelect(&dbms, &(Manager::select), "2");
-	// dbms.readInputFile("OrderLineNumber.txt");
-	// printElapsedTimeForIndex(&dbms, &(Manager::indexBySort));
-	// printElapsedTimeForSelect(&dbms, &(Manager::selectBySort), "2");
 
-	printElapsedTimeForRead(&dbms, &(Manager::readInputFile), "RandomString.txt");
-	printElapsedTimeForIndex(&dbms, &(Manager::index));
-	printElapsedTimeForSelect(&dbms, &(Manager::select), "meaqua");
-	// printElapsedTimeForRead(&dbms, &(Manager::readInputFile), "RandomString.txt");
-	// printElapsedTimeForIndex(&dbms, &(Manager::indexBySort));
-	// printElapsedTimeForSelect(&dbms, &(Manager::selectBySort), "zdwgonaioweh");
+	printElapsedTimeForRead(&dbms, &Manager::readInputFile, "RandomString.txt");
+	printElapsedTimeForIndex(&dbms, &Manager::index);
+	printElapsedTimeForSelect(&dbms, &Manager::select, "meaqua");
 	
 	return 0;
 }

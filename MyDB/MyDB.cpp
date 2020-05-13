@@ -13,8 +13,6 @@ MyDB::MyDB(int maxL)
 MyDB::~MyDB() {
     if (rows != nullptr)
         delete rows;
-    if (sortedRows != nullptr)
-        delete sortedRows;
 }
 
 size_t MyDB::getSize() {
@@ -52,14 +50,6 @@ void MyDB::index() {
     }
 }
 
-void MyDB::indexBySort() {
-    isIndex = true;
-    sortedRows = new SortIndex(&column);
-    if (size > 0) {
-        sortedRows->put(size);
-    }
-}
-
 void MyDB::printTree() {
     if (!isIndex)
         return ;
@@ -67,16 +57,10 @@ void MyDB::printTree() {
     rows->print();
 }
 
-void MyDB::printList() {
-    if (!isIndex)
-        return ;
-    sortedRows->print();
-}
-
 void MyDB::put(const char * src) {
     // std::cout << "Constructing unique_ptr for: " << src << std::endl;
     std::unique_ptr<char[]> s(new char[CHARSIZE]);
-    strcpy_s(s.get(), CHARSIZE, src);
+    strncpy(s.get(), src, CHARSIZE-1);
     // std::cout << "Constructed: " << src << std::endl;
     column.push_back(std::move(s));
     // std::cout << "Pushed on vector: " << src << std::endl;
@@ -106,10 +90,6 @@ const std::vector<size_t>* MyDB::findAll(const char * target) {
     return (isIndex) ? getListByIndex(target) : getListByLinear(target);
 }
 
-const std::vector<size_t>* MyDB::findBySort(const char * target) {
-    return sortedRows->lookUp(target);
-}
-
 void MyDB::print(const std::vector<size_t>* inList) {
     if (!inList->empty()) {
         std::cout << "Matched Items at index: " << std::endl;
@@ -123,18 +103,4 @@ void MyDB::print(const std::vector<size_t>* inList) {
         std::cout << "No matched items found" << std::endl;
     }
     if (!isIndex) delete inList;
-}
-
-void MyDB::printBySort(const std::vector<size_t>* inList) {
-    if (!inList->empty()) {
-        std::cout << "Matched Items at index: " << std::endl;
-        for (auto it=inList->cbegin(); it != inList->cend(); ++it) {
-            std::cout << *it << ' ';
-        }
-        std::cout << std::endl;
-    }
-    else {
-        std::cout << "No matched items found" << std::endl;
-    }
-    delete inList;
 }
