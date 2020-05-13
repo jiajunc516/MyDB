@@ -17,6 +17,7 @@ void AVLIndexTree::deleteTree() {
 
 AVLIndexTree::AVLIndexTree(std::vector<std::unique_ptr<char[]>> * v) 
     : column(v) {
+    // balanceTime(0);
 }
 
 AVLIndexTree::~AVLIndexTree() {
@@ -88,6 +89,7 @@ TreeNode * AVLIndexTree::insert(const size_t index, TreeNode* node) {
 }
 
 TreeNode * AVLIndexTree::balance(TreeNode* node) {
+    // auto start = std::chrono::steady_clock::now();
     int h_dif = height_diff(node);
     if (h_dif > 1) {
         if (height_diff(node->getLeft()) > 0)
@@ -101,6 +103,8 @@ TreeNode * AVLIndexTree::balance(TreeNode* node) {
         else
             node = RL_rotate(node);
     }
+    // auto end = std::chrono::steady_clock::now();
+    // balanceTime += (end - start);
     return node;
 }
 
@@ -189,3 +193,9 @@ void AVLIndexTree::print() {
     }
     // std::cout << "End AVLIndexTree::print()" << std::endl;
 }
+
+// void AVLIndexTree::getBalanceTime() {
+//     std::cout << "Balance Time: " 
+// 		<< std::chrono::duration_cast<std::chrono::milliseconds>(balanceTime).count() 
+// 		<< " [ms]" << std::endl;
+// }

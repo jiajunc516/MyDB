@@ -38,6 +38,7 @@ public:
     void setSize(size_t n);
     int getCharSize();
     int getCharSize() const;
+    AVLIndexTree* getRows();
     void printTree();
 };
 

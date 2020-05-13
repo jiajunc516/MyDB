@@ -35,6 +35,10 @@ int MyDB::getCharSize() const {
     return CHARSIZE;
 }
 
+AVLIndexTree* MyDB::getRows() {
+    return rows;
+}
+
 void MyDB::createIndex() {
     for (size_t i=0; i<size; ++i) {
         rows->put(i);

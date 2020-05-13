@@ -2,6 +2,7 @@
 #include <queue>
 #include <vector>
 #include <memory>
+#include <chrono>
 #include <string.h>
 
 #include "TreeNode.h"
@@ -9,6 +10,7 @@
 class AVLIndexTree {
 private:
     bool collide = false;
+    // std::chrono::duration<int64_t, std::nano> balanceTime;
     TreeNode * root = nullptr;
     std::vector<std::unique_ptr<char[]>> * column = nullptr;
     
@@ -32,5 +34,6 @@ public:
 
     void put(const size_t index);
     std::vector<size_t>* lookUp(const char * target);
+    // void getBalanceTime();
     void print();
 };
