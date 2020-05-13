@@ -11,8 +11,6 @@ MyDB::MyDB(int maxL)
 }
 
 MyDB::~MyDB() {
-    if (rows != nullptr)
-        delete rows;
     if (sortedRows != nullptr)
         delete sortedRows;
 }
@@ -37,34 +35,12 @@ int MyDB::getCharSize() const {
     return CHARSIZE;
 }
 
-void MyDB::createIndex() {
-    for (size_t i=0; i<size; ++i) {
-        rows->put(i);
-    }
-}
-
 void MyDB::index() {
-    isIndex = true;
-    // rows = new AVLIndexTree(this);
-    rows = new AVLIndexTree(&column);
-    if (size > 0) {
-        createIndex();
-    }
-}
-
-void MyDB::indexBySort() {
     isIndex = true;
     sortedRows = new SortIndex(&column);
     if (size > 0) {
         sortedRows->put(size);
     }
-}
-
-void MyDB::printTree() {
-    if (!isIndex)
-        return ;
-    // std::cout << "Called: printTree" << std::endl;
-    rows->print();
 }
 
 void MyDB::printList() {
@@ -74,17 +50,9 @@ void MyDB::printList() {
 }
 
 void MyDB::put(const char * src) {
-    // std::cout << "Constructing unique_ptr for: " << src << std::endl;
     std::unique_ptr<char[]> s(new char[CHARSIZE]);
-    strcpy_s(s.get(), CHARSIZE, src);
-    // std::cout << "Constructed: " << src << std::endl;
+    strncpy(s.get(), src, CHARSIZE-1);
     column.push_back(std::move(s));
-    // std::cout << "Pushed on vector: " << src << std::endl;
-    if (isIndex) {
-        // std::cout << "Pushing on Tree: " << src << std::endl;
-        rows->put(size);
-        // std::cout << "Pushed on tree: " << src << std::endl;
-    }
     ++size;
 }
 
@@ -99,33 +67,14 @@ std::vector<size_t>* MyDB::getListByLinear(const char * target) {
 }
 
 std::vector<size_t>* MyDB::getListByIndex(const char * target) {
-    return rows->lookUp(target);
+    return sortedRows->lookUp(target);
 }
 
 const std::vector<size_t>* MyDB::findAll(const char * target) {
     return (isIndex) ? getListByIndex(target) : getListByLinear(target);
 }
 
-const std::vector<size_t>* MyDB::findBySort(const char * target) {
-    return sortedRows->lookUp(target);
-}
-
 void MyDB::print(const std::vector<size_t>* inList) {
-    if (!inList->empty()) {
-        std::cout << "Matched Items at index: " << std::endl;
-        for (auto it=inList->cbegin(); it != inList->cend(); ++it) {
-            std::cout << *it << ' ';
-        }
-        std::cout << std::endl;
-    }
-    else {
-        delete inList;
-        std::cout << "No matched items found" << std::endl;
-    }
-    if (!isIndex) delete inList;
-}
-
-void MyDB::printBySort(const std::vector<size_t>* inList) {
     if (!inList->empty()) {
         std::cout << "Matched Items at index: " << std::endl;
         for (auto it=inList->cbegin(); it != inList->cend(); ++it) {

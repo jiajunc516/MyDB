@@ -74,39 +74,25 @@ int main() {
 	// db.put("bcdg");
 	// db.put("a");
 	// db.index();
-	// db.printTree();
-	
-	// //db.indexBySort();
-	// //db.printList();
+	// db.printList();
 	// cout << "----------------" << endl;
 	// cout << "Search: a" << endl;
-	// db.findAll("a");
-	//const std::vector<size_t>* ans = db.findBySort("a");
-	//db.printBySort(ans);
+	// db.print(db.findAll("a"));
 
 	Manager dbms(8);
 	// select * from Customers where Country = 'USA';
 	// dbms.readInputFile("Country.txt");
 	// printElapsedTimeForIndex(&dbms, &(Manager::index));
 	// printElapsedTimeForSelect(&dbms, &(Manager::select), "USA");
-	// dbms.readInputFile("Country.txt");
-	// printElapsedTimeForIndex(&dbms, &(Manager::indexBySort));
-	// printElapsedTimeForSelect(&dbms, &(Manager::selectBySort), "USA");
 
 	// select * from Orders where OrderLineNumber = '2';
 	// dbms.readInputFile("OrderLineNumber.txt");
 	// printElapsedTimeForIndex(&dbms, &(Manager::index));
 	// printElapsedTimeForSelect(&dbms, &(Manager::select), "2");
-	// dbms.readInputFile("OrderLineNumber.txt");
-	// printElapsedTimeForIndex(&dbms, &(Manager::indexBySort));
-	// printElapsedTimeForSelect(&dbms, &(Manager::selectBySort), "2");
 
 	printElapsedTimeForRead(&dbms, &(Manager::readInputFile), "RandomString.txt");
 	printElapsedTimeForIndex(&dbms, &(Manager::index));
-	printElapsedTimeForSelect(&dbms, &(Manager::select), "meaqua");
-	// printElapsedTimeForRead(&dbms, &(Manager::readInputFile), "RandomString.txt");
-	// printElapsedTimeForIndex(&dbms, &(Manager::indexBySort));
-	// printElapsedTimeForSelect(&dbms, &(Manager::selectBySort), "zdwgonaioweh");
+	printElapsedTimeForSelect(&dbms, &(Manager::select), "z");
 	
 	return 0;
 }
