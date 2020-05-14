@@ -87,11 +87,25 @@ void SortIndex::insertSort(int left, int right) {
     }
 }
 
+int SortIndex::pickFromThree(int l, int r) {
+    int temp[3] = {l, (l+r)/2, r};
+    for (int i=0; i<2; ++i) {
+        for (int j=0; j<2-i; ++j) {
+            if (compare(sortedCol[temp[j]], sortedCol[temp[j+1]]) > 0) {
+                int t = temp[j];
+                temp[j] = temp[j+1];
+                temp[j+1] = t;
+            }
+        }
+    }
+    return temp[1];
+}
+
 void SortIndex::quickSort(int start, int end) {
     if (start >= end)
         return ;
     int l = start, r = end;
-    size_t pivot = sortedCol[(l + r) / 2];
+    size_t pivot = sortedCol[pickFromThree(start, end)];
     while (l <= r) {
         while (compare(sortedCol[l], pivot) < 0 && l <= r) {
             ++l;
@@ -113,7 +127,12 @@ void SortIndex::quickSort(int start, int end) {
 
 void SortIndex::put(size_t size) {
     insert(size);
+    auto start = std::chrono::steady_clock::now();
     sort();
+    auto end = std::chrono::steady_clock::now();
+    std::cout << "Sort takes time: " 
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() 
+		<< " [ms]" << std::endl;
 }
 
 size_t SortIndex::binarySearch(const char* target) {

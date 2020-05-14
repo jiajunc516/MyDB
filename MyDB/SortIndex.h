@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <chrono>
 #include <string.h>
 
 class SortIndex {
@@ -12,6 +13,7 @@ private:
 
     int compare(const size_t left, const size_t right);
     int compare(const size_t dest, const char * target);
+    int pickFromThree(int l, int r);
     void insert(size_t size);
     void sort();
     void quickSort(int start, int end);
