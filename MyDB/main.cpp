@@ -94,7 +94,7 @@ int main() {
 	printElapsedTimeForIndex(&dbms, &(Manager::index));
 	//dbms.getDB()->printList();
 	cout << "-------------------------------------------" << endl;
-	printElapsedTimeForSelect(&dbms, &(Manager::select), "aptchrw");
+	printElapsedTimeForSelect(&dbms, &(Manager::select), "cxk");
 	
 	return 0;
 }
