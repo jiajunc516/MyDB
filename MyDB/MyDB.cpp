@@ -51,7 +51,7 @@ void MyDB::printList() {
 
 void MyDB::put(const char * src) {
     std::unique_ptr<char[]> s(new char[CHARSIZE]);
-    strncpy(s.get(), src, CHARSIZE-1);
+    strncpy(s.get(), src, CHARSIZE);
     column.push_back(std::move(s));
     ++size;
 }

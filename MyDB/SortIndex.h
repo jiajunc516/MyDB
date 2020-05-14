@@ -17,6 +17,7 @@ private:
     void quickSort(int start, int end);
     void mergeSort(int left, int right);
     void merge(int left, int mid, int right);
+    void insertSort(int left, int right);
     size_t binarySearch(const char* target);
 public:
     SortIndex(std::vector<std::unique_ptr<char[]>> * v);

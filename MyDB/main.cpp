@@ -60,7 +60,7 @@ void printElapsedTimeForSelect(Manager* m, const std::vector<size_t>* (Manager::
 }
 
 int main() {
-	EnableMemLeakCheck();
+	// EnableMemLeakCheck();
 	// MyDB db;
 	// db.put("a");
 	// db.put("bc");
@@ -92,7 +92,9 @@ int main() {
 
 	printElapsedTimeForRead(&dbms, &(Manager::readInputFile), "RandomString.txt");
 	printElapsedTimeForIndex(&dbms, &(Manager::index));
-	printElapsedTimeForSelect(&dbms, &(Manager::select), "z");
+	//dbms.getDB()->printList();
+	cout << "-------------------------------------------" << endl;
+	printElapsedTimeForSelect(&dbms, &(Manager::select), "aptchrw");
 	
 	return 0;
 }

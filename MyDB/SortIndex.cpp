@@ -40,7 +40,8 @@ void SortIndex::sort() {
 }
 
 void SortIndex::mergeSort(int left, int right) {
-    if (left >= right) {
+    if (right - left < 8) {
+        insertSort(left, right);
         return ;
     }
     int m = (left + right) / 2;
@@ -72,6 +73,18 @@ void SortIndex::merge(int left, int mid, int right) {
         sortedCol[left+x] = arr[x];
     }
     delete arr;
+}
+
+void SortIndex::insertSort(int left, int right) {
+    for (int i = left; i <= right; ++i) {
+        for (int j = i; j > left; --j) {
+            if (compare(sortedCol[j-1], sortedCol[j]) > 0) {
+                size_t temp = sortedCol[j-1];
+                sortedCol[j-1] = sortedCol[j];
+                sortedCol[j] = temp;
+            }
+        }
+    }
 }
 
 void SortIndex::quickSort(int start, int end) {
@@ -143,7 +156,7 @@ std::vector<size_t>* SortIndex::lookUp(const char* target) {
 
 void SortIndex::print() {
     for (size_t i = 0; i < size; ++i) {
-        std::cout << sortedCol[i] << " ";
+        std::cout << column->at(sortedCol[i]).get() << " ";
     }
     std::cout << std::endl;
 }
