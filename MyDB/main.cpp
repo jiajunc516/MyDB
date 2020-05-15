@@ -45,7 +45,7 @@ void printElapsedTimeForSelect(Manager* m, const std::vector<size_t>* (Manager::
 	const std::vector<size_t>* v = (m->*pSelect)(target);
 	auto end = chrono::steady_clock::now();
 
-	cout << "\nSearch Complete Successfully. Time Elapsed: " 
+	cout << "Search Complete Successfully. Time Elapsed: " 
 		<< chrono::duration_cast<chrono::nanoseconds>(end - start).count() 
 		<< " [ns]" << endl;
 
@@ -92,9 +92,9 @@ int main() {
 
 	printElapsedTimeForRead(&dbms, &(Manager::readInputFile), "RandomString.txt");
 	printElapsedTimeForIndex(&dbms, &(Manager::index));
-	//dbms.getDB()->printList();
+	dbms.getDB()->getSortedRows()->getBalanceTime();
 	cout << "-------------------------------------------" << endl;
-	printElapsedTimeForSelect(&dbms, &(Manager::select), "aptchrw");
+	printElapsedTimeForSelect(&dbms, &(Manager::select), "e");
 	
 	return 0;
 }

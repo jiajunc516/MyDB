@@ -37,6 +37,9 @@ public:
     void setSize(size_t n);
     int getCharSize();
     int getCharSize() const;
+    SortIndex* getSortedRows() {
+        return sortedRows;
+    }
     void printList();
 };
 

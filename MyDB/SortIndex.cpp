@@ -19,11 +19,19 @@ void SortIndex::setSize(size_t size) {
 }
 
 int SortIndex::compare(const size_t left, const size_t right) {
-    return strcmp(column->at(left).get(), column->at(right).get());
+    auto start = std::chrono::steady_clock::now();
+    int i = strcmp(column->at(left).get(), column->at(right).get());
+    auto end = std::chrono::steady_clock::now();
+    balanceTime += (end - start);
+    return i;
 }
 
 int SortIndex::compare(const size_t dest, const char * target) {
-    return strcmp(column->at(dest).get(), target);
+    auto start = std::chrono::steady_clock::now();
+    int i = strcmp(column->at(dest).get(), target);
+    auto end = std::chrono::steady_clock::now();
+    balanceTime += (end - start);
+    return i;
 }
 
 void SortIndex::insert(size_t size) {
@@ -35,8 +43,8 @@ void SortIndex::insert(size_t size) {
 }
 
 void SortIndex::sort() {
-    // quickSort(0, column->size()-1);
-    mergeSort(0, size-1);
+    quickSort(0, column->size()-1);
+    //mergeSort(0, size-1);
 }
 
 void SortIndex::mergeSort(int left, int right) {
@@ -76,12 +84,12 @@ void SortIndex::merge(int left, int mid, int right) {
 }
 
 void SortIndex::insertSort(int left, int right) {
-    for (int i = left; i <= right; ++i) {
-        for (int j = i; j > left; --j) {
-            if (compare(sortedCol[j-1], sortedCol[j]) > 0) {
-                size_t temp = sortedCol[j-1];
-                sortedCol[j-1] = sortedCol[j];
-                sortedCol[j] = temp;
+    for (int i = left+1; i <= right; ++i) {
+        if (compare(sortedCol[i], sortedCol[i-1]) < 0) {
+            for (int j = left; j < i; ++j) {
+                if (compare(sortedCol[j], sortedCol[i]) > 0) {
+                    swap(i, j);
+                }
             }
         }
     }
@@ -102,8 +110,10 @@ int SortIndex::pickFromThree(int l, int r) {
 }
 
 void SortIndex::quickSort(int start, int end) {
-    if (start >= end)
+    if (end - start < 9) {
+        insertSort(start, end);
         return ;
+    }
     int l = start, r = end;
     size_t pivot = sortedCol[pickFromThree(start, end)];
     while (l <= r) {
@@ -173,9 +183,21 @@ std::vector<size_t>* SortIndex::lookUp(const char* target) {
     return outList;
 }
 
+void SortIndex::swap(int l, int r) {
+    size_t temp = sortedCol[l];
+    sortedCol[l] = sortedCol[r];
+    sortedCol[r] = temp;
+}
+
 void SortIndex::print() {
     for (size_t i = 0; i < size; ++i) {
         std::cout << column->at(sortedCol[i]).get() << " ";
     }
     std::cout << std::endl;
+}
+
+void SortIndex::getBalanceTime() {
+    std::cout << "Compare Time: " 
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(balanceTime).count() 
+		<< " [ms]" << std::endl;
 }
